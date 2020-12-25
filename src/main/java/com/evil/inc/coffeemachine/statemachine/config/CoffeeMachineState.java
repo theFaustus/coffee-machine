@@ -1,0 +1,7 @@
+package com.evil.inc.coffeemachine.statemachine.config;
+
+public enum CoffeeMachineState {
+    OFF, STANDBY, STANDBY_READY, DRINK_SIZE_SELECTED,
+    PREPARING, PREPARATION_COMPLETE, MILK_SERVICE,
+    COFFEE_SERVICE, SUGAR_SERVICE, WATER_SERVICE, WATER_PREHEAT, ERROR
+}

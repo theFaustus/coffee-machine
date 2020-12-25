@@ -1,0 +1,7 @@
+package com.evil.inc.coffeemachine.statemachine.config;
+
+public enum CoffeeMachineEvent {
+    TURN_ON, TURN_OFF, SELECT_DRINK_SIZE, SELECT_DRINK, PREPARE_DRINK,
+    CHECK_COFFEE_ERROR, CHECK_MILK_ERROR, CHECK_SUGAR_ERROR, CHECK_WATER_ERROR,
+    COFFEE_REFILL, MILK_REFILL, SUGAR_REFILL, WATER_REFILL
+}
