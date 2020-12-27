@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum DrinkSize {
+public enum CoffeeDrinkSize {
     REGULAR(1), LARGE(2);
 
     private int multiplicationFactor;

@@ -7,13 +7,14 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum CoffeeDrink {
-    ESPRESSO(30.0, 5.0, 0.0),
-    AMERICANO(60.0, 5.0, 0.0),
-    CAPPUCCINO(30.0, 15.0, 30.0),
-    MOCHA(30.0, 15.0,50.0);
+    ESPRESSO(30.0, 5.0, 0.0, 40.0),
+    AMERICANO(60.0, 5.0, 0.0, 80.0),
+    CAPPUCCINO(30.0, 15.0, 30.0, 80.0),
+    MOCHA(30.0, 15.0,50.0, 80.0);
 
     private double coffeeAmount;
     private double sugarAmount;
     private double milkAmount;
+    private double waterAmount;
 
 }
