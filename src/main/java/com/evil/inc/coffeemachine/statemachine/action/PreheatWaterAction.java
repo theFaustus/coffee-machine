@@ -1,6 +1,7 @@
 package com.evil.inc.coffeemachine.statemachine.action;
 
 import com.evil.inc.coffeemachine.domain.CoffeeMachineDetails;
+import com.evil.inc.coffeemachine.domain.CoffeeResource;
 import com.evil.inc.coffeemachine.exception.CoffeeMachineDetailsNotFound;
 import com.evil.inc.coffeemachine.repository.CoffeeMachineDetailsRepository;
 import com.evil.inc.coffeemachine.statemachine.config.CoffeeMachineEvent;
@@ -12,6 +13,8 @@ import org.springframework.statemachine.action.Action;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.WATER_TEMPERATURE;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +29,6 @@ public class PreheatWaterAction implements Action<CoffeeMachineState, CoffeeMach
         coffeeMachineDetails.increaseWaterTemperature(CoffeeMachineDetails.BOILING_POINT_DEGREES - coffeeMachineDetails.getWaterTemperature());
         coffeeMachineDetailsRepository.save(coffeeMachineDetails);
         log.info(context.getSource().getId() + "/" + context.getTarget().getId() + " : Water preheated to " + coffeeMachineDetails.getWaterTemperature());
-        context.getExtendedState().getVariables().put("waterTemperature", coffeeMachineDetails.getWaterTemperature());
+        context.getExtendedState().getVariables().put(WATER_TEMPERATURE, coffeeMachineDetails.getWaterTemperature());
     }
 }

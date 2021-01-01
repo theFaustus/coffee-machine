@@ -2,6 +2,7 @@ package com.evil.inc.coffeemachine.statemachine.config;
 
 import com.evil.inc.coffeemachine.domain.CoffeeDrink;
 import com.evil.inc.coffeemachine.domain.CoffeeDrinkSize;
+import com.evil.inc.coffeemachine.domain.CoffeeResource;
 import com.evil.inc.coffeemachine.statemachine.action.CoffeeServiceAction;
 import com.evil.inc.coffeemachine.statemachine.action.MilkServiceAction;
 import com.evil.inc.coffeemachine.statemachine.action.PreheatWaterAction;
@@ -26,6 +27,8 @@ import org.springframework.statemachine.guard.Guard;
 import java.util.EnumSet;
 
 import static com.evil.inc.coffeemachine.domain.CoffeeMachineDetails.BOILING_POINT_DEGREES;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.*;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.WATER;
 import static com.evil.inc.coffeemachine.statemachine.config.CoffeeMachineEvent.PREPARE_DRINK;
 import static com.evil.inc.coffeemachine.statemachine.config.CoffeeMachineEvent.SELECT_DRINK;
 import static com.evil.inc.coffeemachine.statemachine.config.CoffeeMachineEvent.SELECT_DRINK_SIZE;
@@ -61,16 +64,14 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     private final PreparationCompleteAction preparationCompleteAction;
 
     @Override
-    public void configure(StateMachineConfigurationConfigurer<CoffeeMachineState, CoffeeMachineEvent> config)
-            throws Exception {
+    public void configure(StateMachineConfigurationConfigurer<CoffeeMachineState, CoffeeMachineEvent> config) throws Exception {
         config
                 .withConfiguration()
                 .autoStartup(true);
     }
 
     @Override
-    public void configure(StateMachineStateConfigurer<CoffeeMachineState, CoffeeMachineEvent> states)
-            throws Exception {
+    public void configure(StateMachineStateConfigurer<CoffeeMachineState, CoffeeMachineEvent> states) throws Exception {
         states
                 .withStates()
                 .initial(OFF)
@@ -80,9 +81,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     }
 
     @Override
-    public void configure(
-            StateMachineTransitionConfigurer<CoffeeMachineState, CoffeeMachineEvent> transitions)
-            throws Exception {
+    public void configure(StateMachineTransitionConfigurer<CoffeeMachineState, CoffeeMachineEvent> transitions) throws Exception {
         transitions
                 .withExternal()
                 .source(OFF).target(STANDBY)
@@ -145,7 +144,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     @Bean
     public Guard<CoffeeMachineState, CoffeeMachineEvent> coldWater() {
         return ctx -> {
-            Double waterTemperature = ctx.getExtendedState().get("waterTemperature", Double.class);
+            Double waterTemperature = ctx.getExtendedState().get(WATER_TEMPERATURE, Double.class);
             log.info(ctx.getSource().getId() + "/" + ctx.getTarget().getId() + " : Checking if the water is heated enough..." + waterTemperature);
             return waterTemperature <= BOILING_POINT_DEGREES;
         };
@@ -154,7 +153,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     @Bean
     public Guard<CoffeeMachineState, CoffeeMachineEvent> notEnoughWater() {
         return ctx -> {
-            Double water = ctx.getExtendedState().get("water", Double.class);
+            Double water = ctx.getExtendedState().get(WATER, Double.class);
             log.info(ctx.getSource().getId() + "/" + ctx.getTarget().getId() + " : Checking if there is enough water..." + water);
             return water <= 0;
         };
@@ -163,7 +162,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     @Bean
     public Guard<CoffeeMachineState, CoffeeMachineEvent> notEnoughCoffee() {
         return ctx -> {
-            Double coffee = ctx.getExtendedState().get("coffee", Double.class);
+            Double coffee = ctx.getExtendedState().get(COFFEE, Double.class);
             log.info(ctx.getSource().getId() + "/" + ctx.getTarget().getId() + " : Checking if there is enough coffee..." + coffee);
             return coffee <= 0;
         };
@@ -172,7 +171,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     @Bean
     public Guard<CoffeeMachineState, CoffeeMachineEvent> notEnoughMilk() {
         return ctx -> {
-            Double milk = ctx.getExtendedState().get("milk", Double.class);
+            Double milk = ctx.getExtendedState().get(MILK, Double.class);
             log.info(ctx.getSource().getId() + "/" + ctx.getTarget().getId() + " : Checking if there is enough milk..." + milk);
             return milk <= 0;
         };
@@ -181,7 +180,7 @@ public class CoffeeStateMachineConfiguration extends StateMachineConfigurerAdapt
     @Bean
     public Guard<CoffeeMachineState, CoffeeMachineEvent> notEnoughSugar() {
         return ctx -> {
-            Double sugar = ctx.getExtendedState().get("sugar", Double.class);
+            Double sugar = ctx.getExtendedState().get(SUGAR, Double.class);
             log.info(ctx.getSource().getId() + "/" + ctx.getTarget().getId() + " : Checking if there is enough sugar..." + sugar);
             return sugar <= 0;
         };

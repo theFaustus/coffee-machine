@@ -11,6 +11,8 @@ import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 import org.springframework.stereotype.Component;
 
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.WATER;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +26,6 @@ public class WaterServiceAction implements Action<CoffeeMachineState, CoffeeMach
         coffeeMachineDetails.increaseAmountOfWater(500 - coffeeMachineDetails.getAmountOfWater());
         coffeeMachineDetailsRepository.save(coffeeMachineDetails);
         log.info(context.getSource().getId() + "/" + context.getTarget().getId() + " : Water refilled to " + coffeeMachineDetails.getAmountOfWater());
-        context.getExtendedState().getVariables().put("water", coffeeMachineDetails.getAmountOfWater());
+        context.getExtendedState().getVariables().put(WATER, coffeeMachineDetails.getAmountOfWater());
     }
 }

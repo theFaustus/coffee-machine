@@ -11,6 +11,8 @@ import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 import org.springframework.stereotype.Component;
 
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.SUGAR;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +26,6 @@ public class SugarServiceAction implements Action<CoffeeMachineState, CoffeeMach
         coffeeMachineDetails.increaseAmountOfSugar(500 - coffeeMachineDetails.getAmountOfSugar());
         coffeeMachineDetailsRepository.save(coffeeMachineDetails);
         log.info(context.getSource().getId() + "/" + context.getTarget().getId() + " : Sugar refilled to " + coffeeMachineDetails.getAmountOfSugar());
-        context.getExtendedState().getVariables().put("sugar", coffeeMachineDetails.getAmountOfSugar());
+        context.getExtendedState().getVariables().put(SUGAR, coffeeMachineDetails.getAmountOfSugar());
     }
 }

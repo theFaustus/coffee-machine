@@ -8,5 +8,5 @@ import lombok.Getter;
 public enum CoffeeDrinkSize {
     REGULAR(1), LARGE(2);
 
-    private int multiplicationFactor;
+    private final int multiplicationFactor;
 }

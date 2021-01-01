@@ -11,6 +11,12 @@ import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 import org.springframework.stereotype.Component;
 
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.COFFEE;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.MILK;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.SUGAR;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.WATER;
+import static com.evil.inc.coffeemachine.domain.CoffeeResource.WATER_TEMPERATURE;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -27,10 +33,10 @@ public class TurnOnAction implements Action<CoffeeMachineState, CoffeeMachineEve
     }
 
     private void updateStateMachineVariables(StateContext<CoffeeMachineState, CoffeeMachineEvent> context, CoffeeMachineDetails coffeeMachineDetails) {
-        context.getExtendedState().getVariables().put("milk", coffeeMachineDetails.getAmountOfMilk());
-        context.getExtendedState().getVariables().put("coffee", coffeeMachineDetails.getAmountOfCoffee());
-        context.getExtendedState().getVariables().put("sugar", coffeeMachineDetails.getAmountOfSugar());
-        context.getExtendedState().getVariables().put("water", coffeeMachineDetails.getAmountOfWater());
-        context.getExtendedState().getVariables().put("waterTemperature", coffeeMachineDetails.getWaterTemperature());
+        context.getExtendedState().getVariables().put(MILK, coffeeMachineDetails.getAmountOfMilk());
+        context.getExtendedState().getVariables().put(COFFEE, coffeeMachineDetails.getAmountOfCoffee());
+        context.getExtendedState().getVariables().put(SUGAR, coffeeMachineDetails.getAmountOfSugar());
+        context.getExtendedState().getVariables().put(WATER, coffeeMachineDetails.getAmountOfWater());
+        context.getExtendedState().getVariables().put(WATER_TEMPERATURE, coffeeMachineDetails.getWaterTemperature());
     }
 }
